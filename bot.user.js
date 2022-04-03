@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         NERV Bot
 // @namespace    https://github.com/14ROVI/nerv-bot
-// @version      1
+// @version      2
 // @description  The bot for NERV!
 // @author       14ROVI
 // @match        https://www.reddit.com/r/place/*
