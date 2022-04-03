@@ -15,7 +15,6 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-// Sorry voor de rommelige code, haast en clean gaatn iet altijd samen ;)
 
 var socket;
 var order = undefined;
@@ -142,19 +141,19 @@ function connectSocket() {
         switch (data.type.toLowerCase()) {
             case 'map':
                 Toastify({
-                    text: `Nieuwe map laden (reden: ${data.reason ? data.reason : 'verbonden met server'})...`,
+                    text: `New map: ${data.reason ? data.reason : 'no reason'}`,
                     duration: DEFAULT_TOAST_DURATION_MS
                 }).showToast();
                 currentOrderCtx = await getCanvasFromUrl(`https://nerv.rovi.me/maps/${data.data}`, currentOrderCanvas, 0, 0, true);
                 order = getRealWork(currentOrderCtx.getImageData(0, 0, 2000, 2000).data);
                 Toastify({
-                    text: `Nieuwe map geladen, ${order.length} pixels in totaal`,
+                    text: `New map loaded, ${order.length} pixels in total`,
                     duration: DEFAULT_TOAST_DURATION_MS
                 }).showToast();
                 break;
             case 'toast':
                 Toastify({
-                    text: `Bericht van server: ${data.message}`,
+                    text: `Message from server: ${data.message}`,
                     duration: data.duration || DEFAULT_TOAST_DURATION_MS,
                     style: data.style || {}
                 }).showToast();
@@ -166,12 +165,12 @@ function connectSocket() {
 
     socket.onclose = function (e) {
         Toastify({
-            text: `PlaceNL server heeft de verbinding verbroken: ${e.reason}`,
+            text: `Error connecting to server: ${e.reason}`,
             duration: DEFAULT_TOAST_DURATION_MS
         }).showToast();
-        console.error('Socketfout: ', e.reason);
+        console.error('Socket error: ', e.reason);
         socket.close();
-        setTimeout(connectSocket, 1000);
+        setTimeout(connectSocket, 10000);
     };
 }
 
@@ -187,12 +186,12 @@ async function attemptPlace() {
         ctx = await getCanvasFromUrl(await getCurrentImageUrl('2'), currentPlaceCanvas, 0, 1000, false)
         ctx = await getCanvasFromUrl(await getCurrentImageUrl('3'), currentPlaceCanvas, 1000, 1000, false)
     } catch (e) {
-        console.warn('Fout bij ophalen map: ', e);
+        console.warn('Error loading map: ', e);
         Toastify({
-            text: 'Fout bij ophalen map. Opnieuw proberen in 10 sec...',
+            text: 'Error loading map, trying again in 10s',
             duration: DEFAULT_TOAST_DURATION_MS
         }).showToast();
-        setTimeout(attemptPlace, 10000); // probeer opnieuw in 10sec.
+        setTimeout(attemptPlace, 10000); // try again in 10sec.
         return;
     }
 
