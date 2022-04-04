@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         NERV Bot
 // @namespace    https://github.com/14ROVI/nerv-bot
-// @version      2.3
+// @version      2.4
 // @description  The bot for NERV!
 // @author       14ROVI
 // @match        https://www.reddit.com/r/place/*
@@ -20,7 +20,7 @@ var placeOrders = [];
 var accessToken;
 var canvas = document.createElement('canvas');
 
-const VERSION = 2.3
+const VERSION = 2.4
 var UPDATE_PENDING = false;
 
 const COLOR_MAPPINGS = {
@@ -128,10 +128,10 @@ async function attemptPlace() {
 		if (currentColorId == colorId) continue;
 
 		Toastify({
-			text: `Pixel placed at (${x}, ${y}) ${hex}`,
+			text: `Placing pixel at (${x}, ${y}) ${hex}`,
 			duration: 10000
 		}).showToast();
-		console.log(`Pixel placed at (${x}, ${y}) ${hex}`)
+		console.log(`Placing pixel at (${x}, ${y}) ${hex}`)
 
 		const time = new Date().getTime();
 		let nextAvailablePixelTimestamp = await place(x, y, colorId) ?? new Date(time + 1000 * 60 * 5 + 1000 * 15)
