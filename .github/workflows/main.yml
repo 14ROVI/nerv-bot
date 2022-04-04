@@ -45,10 +45,6 @@ jobs:
       - name: fetch from master
         run: git fetch origin master
 
-      - name: Generate Pixelart
-        run: python scripts/render_json.py
-        shell: sh
-
       - name: Commit files if changed
         run: |
           git config --local user.email "somemail@domain.com"
