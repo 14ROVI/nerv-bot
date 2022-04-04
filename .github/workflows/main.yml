@@ -43,7 +43,7 @@ jobs:
         shell: sh
         
       - name: fetch from master
-        run: git fetch origin main
+        run: git fetch origin master
 
       - name: Generate Pixelart
         run: python scripts/render_json.py
@@ -59,4 +59,4 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          branch: master
